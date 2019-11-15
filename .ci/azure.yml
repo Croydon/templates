@@ -29,14 +29,15 @@ jobs:
     
     strategy:
       matrix:
-        Apple-Clang 10 Release:
-          AZP_BUILD_WORKER_IMAGE: macOS-10.13
-          CONAN_APPLE_CLANG_VERSIONS: 10.0
-          CONAN_BUILD_TYPES: Release
-        Apple-Clang 10 Debug:
-          AZP_BUILD_WORKER_IMAGE: macOS-10.13
-          CONAN_APPLE_CLANG_VERSIONS: 10.0
-          CONAN_BUILD_TYPES: Debug
+        ${{ if contains(parameters.appleClangVersions, 10) }}:
+          Apple-Clang 10 Release:
+            AZP_BUILD_WORKER_IMAGE: macOS-10.13
+            CONAN_APPLE_CLANG_VERSIONS: 10.0
+            CONAN_BUILD_TYPES: Release
+          Apple-Clang 10 Debug:
+            AZP_BUILD_WORKER_IMAGE: macOS-10.13
+            CONAN_APPLE_CLANG_VERSIONS: 10.0
+            CONAN_BUILD_TYPES: Debug
 
 - ${{ if ne(parameters.vsVersions, '') }}:
   - job: Windows
