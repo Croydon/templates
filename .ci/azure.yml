@@ -2,7 +2,7 @@ parameters:
   pythonVersion: "3.7"
   vsVersions: "14,15,16"
   appleClangVersions: "10"
-  splitByBuildTypes: "true"
+  splitByBuildTypes: "false"
 
 jobs:
 - ${{ if ne(parameters.appleClangVersions, '') }}:
