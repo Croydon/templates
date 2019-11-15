@@ -1,6 +1,7 @@
 parameters:
-  vsVersions: "14,15,16"
   pythonVersion: "3.7"
+  vsVersions: "14,15,16"
+  appleClangVersions: "10"
 
 jobs:
 - ${{ if ne(parameters.appleClangVersions, '') }}:
