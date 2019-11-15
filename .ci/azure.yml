@@ -38,7 +38,6 @@ jobs:
         CONAN_APPLE_CLANG_VERSIONS: 10.0
         CONAN_BUILD_TYPES: Debug
 
-
 - job: Windows
   pool:
     vmImage: $(AZP_BUILD_WORKER_IMAGE)
