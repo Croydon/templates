@@ -17,12 +17,23 @@ jobs:
         pip install --upgrade pip
         python --version
         pip --version
-        chmod +x .ci/install.sh
-        ./.ci/install.sh
-        chmod +x .ci/run.sh
+        unset PYENV_ROOT
+        curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+        export PATH="$HOME/.pyenv/bin:$PATH"
+        if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+        pyenv install 3.7.1
+        pyenv virtualenv 3.7.1 conan
+        pyenv rehash
+        pyenv activate conan
+        pip install cmake --upgrade
+        pip install bincrafters_package_tools
+        conan user
       displayName: Install Conan
     - script: |
-        ./.ci/run.sh
+        export PATH="$HOME/.pyenv/bin:$PATH"
+        if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+        pyenv activate conan
+        python build.py
       env:
         CONAN_LOGIN_USERNAME: $(CONAN_LOGIN_USERNAME)
         CONAN_PASSWORD: $(CONAN_PASSWORD)
