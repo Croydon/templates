@@ -30,15 +30,21 @@ jobs:
     
     strategy:
       matrix:
-        ${{ if contains(parameters.appleClangVersions, 10) }}:
-          Apple-Clang 10 Release:
-            AZP_BUILD_WORKER_IMAGE: macOS-10.13
-            CONAN_APPLE_CLANG_VERSIONS: 10.0
-            CONAN_BUILD_TYPES: Release
-          Apple-Clang 10 Debug:
-            AZP_BUILD_WORKER_IMAGE: macOS-10.13
-            CONAN_APPLE_CLANG_VERSIONS: 10.0
-            CONAN_BUILD_TYPES: Debug
+        ${{ if eq(parameters.splitByBuildTypes, 'true') }}:
+          ${{ if contains(parameters.appleClangVersions, 10) }}:
+            Apple-Clang 10 Release:
+              AZP_BUILD_WORKER_IMAGE: macOS-10.13
+              CONAN_APPLE_CLANG_VERSIONS: 10.0
+              CONAN_BUILD_TYPES: Release
+            Apple-Clang 10 Debug:
+              AZP_BUILD_WORKER_IMAGE: macOS-10.13
+              CONAN_APPLE_CLANG_VERSIONS: 10.0
+              CONAN_BUILD_TYPES: Debug
+        ${{ if ne(parameters.splitByBuildTypes, 'true') }}:
+          ${{ if contains(parameters.appleClangVersions, 10) }}:
+            Apple-Clang 10:
+              AZP_BUILD_WORKER_IMAGE: macOS-10.13
+              CONAN_APPLE_CLANG_VERSIONS: 10.0
 
 - ${{ if ne(parameters.vsVersions, '') }}:
   - job: Windows
@@ -84,7 +90,7 @@ jobs:
 
     strategy:
       matrix:
-        ${{ if eq(parameters.splitByBuildTypes, "true") }}:
+        ${{ if eq(parameters.splitByBuildTypes, 'true') }}:
           ${{ if contains(parameters.vsVersions, 14) }}:
             VS 2015 Release:
               AZP_BUILD_WORKER_IMAGE: vs2015-win2012r2
@@ -112,7 +118,7 @@ jobs:
               AZP_BUILD_WORKER_IMAGE: windows-2019
               CONAN_VISUAL_VERSIONS: 16
               CONAN_BUILD_TYPES: Debug
-        ${{ if ne(parameters.splitByBuildTypes, "true") }}:
+        ${{ if ne(parameters.splitByBuildTypes, 'true') }}:
           ${{ if contains(parameters.vsVersions, 14) }}:
             VS 2015:
               AZP_BUILD_WORKER_IMAGE: vs2015-win2012r2
