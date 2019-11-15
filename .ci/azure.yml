@@ -1,4 +1,6 @@
 parameters:
+  conanLoginUsername: ""
+  conanPassword: ""
   pythonVersion: "3.7"
   vsVersions: "14,15,16"
   appleClangVersions: "10"
@@ -35,8 +37,8 @@ jobs:
         pyenv activate conan
         python build.py
       env:
-        CONAN_LOGIN_USERNAME: $(CONAN_LOGIN_USERNAME)
-        CONAN_PASSWORD: $(CONAN_PASSWORD)
+        CONAN_LOGIN_USERNAME: ${{ parameters.conanLoginUsername }}
+        CONAN_PASSWORD: ${{ parameters.conanPassword }}
       displayName: Run
     
     strategy:
@@ -95,8 +97,8 @@ jobs:
     - script: |
         python build.py
       env:
-        CONAN_LOGIN_USERNAME: $(CONAN_LOGIN_USERNAME)
-        CONAN_PASSWORD: $(CONAN_PASSWORD)
+        CONAN_LOGIN_USERNAME: ${{ parameters.conanLoginUsername }}
+        CONAN_PASSWORD: ${{ parameters.conanPassword }}
       displayName: Run
 
     strategy:
