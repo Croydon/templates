@@ -1,8 +1,6 @@
 parameters:
-  vsVersions: '14,15,16'
-
-variables:
-  PYTHON_VERSION: "3.7"
+  vsVersions: "14,15,16"
+  pythonVersion: "3.7"
 
 jobs:
 - job: macOS
@@ -11,7 +9,7 @@ jobs:
   steps:
   - task: UsePythonVersion@0
     inputs:
-      versionSpec: $(PYTHON_VERSION)
+      versionSpec: $(parameters.pythonVersion)
   - script: |
       pip install --upgrade pip
       python --version
@@ -46,7 +44,7 @@ jobs:
   - task: UsePythonVersion@0
     condition: ne(variables.CONAN_VISUAL_VERSIONS, 14)
     inputs:
-      versionSpec: $(PYTHON_VERSION)
+      versionSpec: $(parameters.pythonVersion)
   - task: PowerShell@2
     condition: eq(variables.CONAN_VISUAL_VERSIONS, 14)
     inputs:
