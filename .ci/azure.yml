@@ -16,29 +16,17 @@ jobs:
       inputs:
         versionSpec: ${{ parameters.pythonVersion }}
     - script: |
-        pip install --upgrade pip
-        python --version
-        pip --version
-        unset PYENV_ROOT
-        curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
-        export PATH="$HOME/.pyenv/bin:$PATH"
-        if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
-        pyenv install 3.7.1
-        pyenv virtualenv 3.7.1 conan
-        pyenv rehash
-        pyenv activate conan
         which cmake
         cmake --version
-        pip install cmake --upgrade
+        pip install --upgrade pip cmake
+        python --version
+        pip --version
         which cmake
         cmake --version
         pip install bincrafters_package_tools
         conan user
       displayName: Install Conan
     - script: |
-        export PATH="$HOME/.pyenv/bin:$PATH"
-        if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
-        pyenv activate conan
         which cmake
         cmake --version
         python build.py
@@ -82,8 +70,8 @@ jobs:
         script: |
           Get-PSDrive C | Select-Object Used,Free
           Get-Childitem C:\ -directory
-          Get-Childitem C:\ProgramData\chocolatey -directory -recursive
-          Get-Childitem "C:\Program Files (x86)" -directory -recursive
+          Get-Childitem C:\ProgramData\chocolatey -directory -recurse
+          Get-Childitem "C:\Program Files (x86)" -directory -recurse
           Get-Childitem "C:\Program Files" -directory -recursive
           Invoke-WebRequest https://www.python.org/ftp/python/3.7.5/python-3.7.5-amd64-webinstall.exe -OutFile C:\py3-setup.exe
           C:\py3-setup.exe /quiet PrependPath=1 InstallAllUsers=1 Include_launcher=1 InstallLauncherAllUsers=1 Include_test=0 Include_doc=0 Include_dev=0 Include_debug=0 Include_tcltk=0 TargetDir=C:\Python3 | Out-Null
@@ -91,7 +79,7 @@ jobs:
           Write-Host "##vso[task.prependpath]C:\Python3\Scripts"
           Remove-Item C:\py3-setup.exe
           $rmvfolders = @( “C:\NPM\*“, “C:\java\*“, “C:\Program Files\nodejs\*“, “C:\Python27\*“, “C:\Program Files (x86)\GtkSharp\*“ )
-          Remove-Item $rmvfolders -Recurse -Force
+          Remove-Item $rmvfolders -recurse -Force
           Get-PSDrive C | Select-Object Used,Free
       displayName: UsePythonVersion for VS 2015
     - script: |
