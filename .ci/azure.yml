@@ -64,28 +64,20 @@ jobs:
       inputs:
         targetType: inline
         script: |
-          Write-Host $env:PATH
-          Get-Childitem "C:\" -directory
-          Get-Childitem "C:\ProgramData" -directory
-          Get-Childitem "C:\Program Files" -directory
           Invoke-WebRequest https://aka.ms/nugetclidl -OutFile C:\nuget.exe
           C:\nuget.exe install python -Version ${{ parameters.pythonVersion }} -ExcludeVersion -OutputDirectory C:\
           Invoke-WebRequest -OutFile get-pip.py https://bootstrap.pypa.io/get-pip.py
           C:\python\tools\python.exe get-pip.py
-          Get-Childitem "C:\python\tools\"
-          Get-Childitem "C:\python\tools\Scripts" -recurse
           Write-Host "##vso[task.prependpath]C:\python\tools"
           Write-Host "##vso[task.prependpath]C:\python\tools\Scripts"
           Remove-Item C:\nuget.exe
           Remove-Item get-pip.py
-          $rmvfolders = @( “C:\NPM\*“, “C:\java\*“, “C:\Python27\*“ )
-          "{0} MB NPM" -f ((Get-ChildItem C:\NPM\ -Recurse | Measure-Object -Property Length -Sum -ErrorAction Stop).Sum / 1MB)
-          "{0} MB JAVA" -f ((Get-ChildItem C:\java\ -Recurse | Measure-Object -Property Length -Sum -ErrorAction Stop).Sum / 1MB)
-          "{0} MB PYTHON" -f ((Get-ChildItem "C:\Python27\" -Recurse | Measure-Object -Property Length -Sum -ErrorAction Stop).Sum / 1MB)
-          Remove-Item $rmvfolders -recurse -Force
       displayName: UsePythonVersion for VS 2015
     - script: |
         echo %PATH%
+        rmdir /S /Q C:\NPM\
+        rmdir /S /Q C:\java\
+        rmdir /S /Q C:\Python27\
         rmdir /S /Q C:\ProgramData\chocolatey
         rmdir /S /Q C:\Strawberry\
         python --version
@@ -94,6 +86,12 @@ jobs:
         pip install bincrafters_package_tools
         conan user
       displayName: Install Conan
+    - task: PowerShell@2
+      condition: eq(variables.CONAN_VISUAL_VERSIONS, 14)
+      inputs:
+        targetType: inline
+        script: |
+          Get-Childitem "C:\ProgramData" -directory
     - script: |
         python build.py
       env:
