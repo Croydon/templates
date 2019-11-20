@@ -72,11 +72,11 @@ jobs:
           Write-Host "##vso[task.prependpath]C:\python\tools\Scripts"
           Remove-Item C:\nuget.exe
           Remove-Item get-pip.py
+          cmd.exe /c "rmdir /S /Q C:\NPM\"
+          cmd.exe /c "rmdir /S /Q C:\java\"
       displayName: UsePythonVersion for VS 2015
     - script: |
         echo %PATH%
-        # rmdir /S /Q C:\NPM\
-        # rmdir /S /Q C:\java\
         rmdir /S /Q C:\ProgramData\chocolatey
         rmdir /S /Q C:\Strawberry\
         python --version
@@ -86,7 +86,6 @@ jobs:
         conan user
       displayName: Install Conan
     - task: PowerShell@2
-      condition: eq(variables.CONAN_VISUAL_VERSIONS, 14)
       inputs:
         targetType: inline
         script: |
