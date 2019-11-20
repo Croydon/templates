@@ -72,11 +72,10 @@ jobs:
           Get-Childitem "C:\Program Files (x86)\NuGet" -recurse
           Get-Childitem "C:\Program Files" -directory
           Invoke-WebRequest https://aka.ms/nugetclidl -OutFile C:\nuget.exe
-          C\nuget.exe install python -Version ${{ parameters.pythonVersion }} -ExcludeVersion -OutputDirectory C:\
+          C:\nuget.exe install python -Version ${{ parameters.pythonVersion }} -ExcludeVersion -OutputDirectory C:\
           Get-Childitem "C:\python" -recurse
           Write-Host "##vso[task.prependpath]C:\python"
           Write-Host "##vso[task.prependpath]C:\python\Scripts"
-          Remove-Item C:\py3-setup.exe
           Remove-Item C:\nuget.exe
           $rmvfolders = @( “C:\NPM\*“, “C:\java\*“, “C:\Program Files\nodejs\*“, “C:\Python27\*“, “C:\Program Files (x86)\GtkSharp\*“ )
           Remove-Item $rmvfolders -recurse -Force
