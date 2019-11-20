@@ -16,19 +16,15 @@ jobs:
       inputs:
         versionSpec: ${{ parameters.pythonVersion }}
     - script: |
-        which cmake
-        cmake --version
         pip install --upgrade pip cmake
         python --version
         pip --version
-        which cmake
         cmake --version
+        which cmake
         pip install bincrafters_package_tools
         conan user
       displayName: Install Conan
     - script: |
-        which cmake
-        cmake --version
         python build.py
       env:
         CONAN_LOGIN_USERNAME: ${{ parameters.conanLoginUsername }}
@@ -70,7 +66,7 @@ jobs:
         script: |
           Get-PSDrive C | Select-Object Used,Free
           Get-Childitem C:\ -directory
-          Get-Childitem C:\ProgramData\chocolatey -directory -recurse
+          Get-Childitem C:\ProgramData\chocolatey -directory
           Get-Childitem "C:\Program Files (x86)" -directory
           Get-Childitem "C:\Program Files" -directory
           Invoke-WebRequest https://www.python.org/ftp/python/3.7.5/python-3.7.5-amd64-webinstall.exe -OutFile C:\py3-setup.exe
@@ -85,9 +81,9 @@ jobs:
     - script: |
         rmdir /S /Q C:\ProgramData\chocolatey
         rmdir /S /Q C:\Strawberry\
-        cmake --version
         python --version
         pip --version
+        cmake --version
         pip install bincrafters_package_tools
         conan user
       displayName: Install Conan
