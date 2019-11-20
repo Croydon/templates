@@ -71,8 +71,8 @@ jobs:
           Get-PSDrive C | Select-Object Used,Free
           Get-Childitem C:\ -directory
           Get-Childitem C:\ProgramData\chocolatey -directory -recurse
-          Get-Childitem "C:\Program Files (x86)" -directory -recurse
-          Get-Childitem "C:\Program Files" -directory -recursive
+          Get-Childitem "C:\Program Files (x86)" -directory
+          Get-Childitem "C:\Program Files" -directory
           Invoke-WebRequest https://www.python.org/ftp/python/3.7.5/python-3.7.5-amd64-webinstall.exe -OutFile C:\py3-setup.exe
           C:\py3-setup.exe /quiet PrependPath=1 InstallAllUsers=1 Include_launcher=1 InstallLauncherAllUsers=1 Include_test=0 Include_doc=0 Include_dev=0 Include_debug=0 Include_tcltk=0 TargetDir=C:\Python3 | Out-Null
           Write-Host "##vso[task.prependpath]C:\Python3"
