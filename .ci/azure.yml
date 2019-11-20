@@ -49,7 +49,7 @@ jobs:
     
     strategy:
       matrix:
-        ${{ if eq(parameters.splitByBuildTypes, 'true') }}:
+        ${{ if eq(parameters.splitByBuildTypes, 'disabled-true') }}:
           ${{ if contains(parameters.appleClangVersions, 10) }}:
             Apple-Clang 10 Release:
               AZP_BUILD_WORKER_IMAGE: macOS-10.13
@@ -59,7 +59,7 @@ jobs:
               AZP_BUILD_WORKER_IMAGE: macOS-10.13
               CONAN_APPLE_CLANG_VERSIONS: 10.0
               CONAN_BUILD_TYPES: Debug
-        ${{ if ne(parameters.splitByBuildTypes, 'true') }}:
+        ${{ if ne(parameters.splitByBuildTypes, 'disable-true') }}:
           ${{ if contains(parameters.appleClangVersions, 10) }}:
             Apple-Clang 10:
               AZP_BUILD_WORKER_IMAGE: macOS-10.13
@@ -89,11 +89,7 @@ jobs:
           C:\py3-setup.exe /quiet PrependPath=1 InstallAllUsers=1 Include_launcher=1 InstallLauncherAllUsers=1 Include_test=0 Include_doc=0 Include_dev=0 Include_debug=0 Include_tcltk=0 TargetDir=C:\Python3 | Out-Null
           Write-Host "##vso[task.prependpath]C:\Python3"
           Write-Host "##vso[task.prependpath]C:\Python3\Scripts"
-          Invoke-WebRequest -OutFile get-pip.py https://bootstrap.pypa.io/get-pip.py
-          C:\Python3\python.exe get-pip.py
           Remove-Item C:\py3-setup.exe
-          Remove-Item get-pip.py
-          Remove-Item $env:TEMP -Recurse -ErrorAction SilentlyContinue
           $rmvfolders = @( “C:\NPM\*“, “C:\java\*“, “C:\Program Files\nodejs\*“, “C:\Python27\*“, “C:\Program Files (x86)\GtkSharp\*“ )
           Remove-Item $rmvfolders -Recurse -Force
           Get-PSDrive C | Select-Object Used,Free
@@ -116,7 +112,7 @@ jobs:
 
     strategy:
       matrix:
-        ${{ if eq(parameters.splitByBuildTypes, 'true') }}:
+        ${{ if eq(parameters.splitByBuildTypes, 'disabled-true') }}:
           ${{ if contains(parameters.vsVersions, 14) }}:
             VS 2015 Release:
               AZP_BUILD_WORKER_IMAGE: vs2015-win2012r2
@@ -144,7 +140,7 @@ jobs:
               AZP_BUILD_WORKER_IMAGE: windows-2019
               CONAN_VISUAL_VERSIONS: 16
               CONAN_BUILD_TYPES: Debug
-        ${{ if ne(parameters.splitByBuildTypes, 'true') }}:
+        ${{ if ne(parameters.splitByBuildTypes, 'disable-true') }}:
           ${{ if contains(parameters.vsVersions, 14) }}:
             VS 2015:
               AZP_BUILD_WORKER_IMAGE: vs2015-win2012r2
