@@ -65,8 +65,8 @@ jobs:
         targetType: inline
         script: |
           Get-PSDrive C | Select-Object Used,Free
-          Get-Childitem C:\ -directory
-          Get-Childitem C:\ProgramData\chocolatey -directory
+          Get-Childitem "C:\" -directory
+          Get-Childitem "C:\ProgramData\chocolatey" -directory
           Get-Childitem "C:\Program Files (x86)" -directory
           Get-Childitem "C:\Program Files" -directory
           Invoke-WebRequest https://www.python.org/ftp/python/3.7.5/python-3.7.5-amd64-webinstall.exe -OutFile C:\py3-setup.exe
