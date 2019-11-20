@@ -1,7 +1,7 @@
 parameters:
   conanLoginUsername: ""
   conanPassword: ""
-  pythonVersion: "3.7"
+  pythonVersion: "3.7.5"
   vsVersions: "14,15,16"  # Possible values: any combination of 14, 15, 16 or empty ("")
   appleClangVersions: ""  # Possible values: "10", "" (for no Apple Clang build jobs)
   splitByBuildTypes: "false"  # Possible values: "false", "true"
@@ -70,13 +70,14 @@ jobs:
           Get-Childitem "C:\ProgramData" -directory
           Get-Childitem "C:\ProgramData\NuGet" -recurse
           Get-Childitem "C:\Program Files (x86)\NuGet" -recurse
-          nuget --version
           Get-Childitem "C:\Program Files" -directory
-          Invoke-WebRequest https://www.python.org/ftp/python/3.7.5/python-3.7.5-amd64-webinstall.exe -OutFile C:\py3-setup.exe
-          C:\py3-setup.exe /quiet PrependPath=1 InstallAllUsers=1 Include_launcher=1 InstallLauncherAllUsers=1 Include_test=0 Include_doc=0 Include_dev=0 Include_debug=0 Include_tcltk=0 TargetDir=C:\Python3 | Out-Null
-          Write-Host "##vso[task.prependpath]C:\Python3"
-          Write-Host "##vso[task.prependpath]C:\Python3\Scripts"
+          Invoke-WebRequest https://aka.ms/nugetclidl -OutFile C:\nuget.exe
+          C\nuget.exe install python -Version ${{ parameters.pythonVersion }} -ExcludeVersion -OutputDirectory C:\
+          Get-Childitem "C:\python" -recurse
+          Write-Host "##vso[task.prependpath]C:\python"
+          Write-Host "##vso[task.prependpath]C:\python\Scripts"
           Remove-Item C:\py3-setup.exe
+          Remove-Item C:\nuget.exe
           $rmvfolders = @( “C:\NPM\*“, “C:\java\*“, “C:\Program Files\nodejs\*“, “C:\Python27\*“, “C:\Program Files (x86)\GtkSharp\*“ )
           Remove-Item $rmvfolders -recurse -Force
       displayName: UsePythonVersion for VS 2015
