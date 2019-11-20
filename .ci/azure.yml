@@ -84,9 +84,9 @@ jobs:
           $rmvfolders = @( “C:\NPM\*“, “C:\java\*“, “C:\Program Files\nodejs\*“, “C:\Python27\*“, “C:\Program Files (x86)\GtkSharp\*“ )
           "{0} MB" -f ((Get-ChildItem C:\NPM\ -Recurse | Measure-Object -Property Length -Sum -ErrorAction Stop).Sum / 1MB)
           "{0} MB" -f ((Get-ChildItem C:\java\ -Recurse | Measure-Object -Property Length -Sum -ErrorAction Stop).Sum / 1MB)
-          "{0} MB" -f ((Get-ChildItem "C:\Program Files\nodejs\"" -Recurse | Measure-Object -Property Length -Sum -ErrorAction Stop).Sum / 1MB)
-          "{0} MB" -f ((Get-ChildItem "C:\Python27\"" -Recurse | Measure-Object -Property Length -Sum -ErrorAction Stop).Sum / 1MB)
-          "{0} MB" -f ((Get-ChildItem "C:\Program Files (x86)\GtkSharp\"" -Recurse | Measure-Object -Property Length -Sum -ErrorAction Stop).Sum / 1MB)
+          "{0} MB" -f ((Get-ChildItem "C:\Program Files\nodejs\" -Recurse | Measure-Object -Property Length -Sum -ErrorAction Stop).Sum / 1MB)
+          "{0} MB" -f ((Get-ChildItem "C:\Python27\" -Recurse | Measure-Object -Property Length -Sum -ErrorAction Stop).Sum / 1MB)
+          "{0} MB" -f ((Get-ChildItem "C:\Program Files (x86)\GtkSharp\" -Recurse | Measure-Object -Property Length -Sum -ErrorAction Stop).Sum / 1MB)
           Remove-Item $rmvfolders -recurse -Force
           Write-Host $env:PATH
       displayName: UsePythonVersion for VS 2015
