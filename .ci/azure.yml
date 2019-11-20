@@ -64,6 +64,8 @@ jobs:
       inputs:
         targetType: inline
         script: |
+          choco --version 
+          choco list -lo
           Get-PSDrive C | Select-Object Used,Free
           Get-Childitem "C:\" -directory
           Get-Childitem "C:\ProgramData\chocolatey" -directory
