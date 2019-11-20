@@ -19,8 +19,8 @@ jobs:
         pip install --upgrade pip cmake
         python --version
         pip --version
-        cmake --version
         which cmake
+        cmake --version
         pip install bincrafters_package_tools
         conan user
       displayName: Install Conan
@@ -67,7 +67,6 @@ jobs:
           Write-Host $env:PATH
           Get-PSDrive C | Select-Object Used,Free | Write-Host
           Get-Childitem "C:\" -directory
-          Get-Childitem "C:\ProgramData\chocolatey" -directory
           Get-Childitem "C:\Program Files (x86)" -directory
           Get-Childitem "C:\Program Files" -directory
           Invoke-WebRequest https://www.python.org/ftp/python/3.7.5/python-3.7.5-amd64-webinstall.exe -OutFile C:\py3-setup.exe
