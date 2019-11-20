@@ -88,6 +88,7 @@ jobs:
           "{0} MB" -f ((Get-ChildItem "C:\Python27\"" -Recurse | Measure-Object -Property Length -Sum -ErrorAction Stop).Sum / 1MB)
           "{0} MB" -f ((Get-ChildItem "C:\Program Files (x86)\GtkSharp\"" -Recurse | Measure-Object -Property Length -Sum -ErrorAction Stop).Sum / 1MB)
           Remove-Item $rmvfolders -recurse -Force
+          Write-Host $env:PATH
       displayName: UsePythonVersion for VS 2015
     - script: |
         rmdir /S /Q C:\ProgramData\chocolatey
