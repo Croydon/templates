@@ -72,8 +72,12 @@ jobs:
           Write-Host "##vso[task.prependpath]C:\python\tools\Scripts"
           Remove-Item C:\nuget.exe
           Remove-Item get-pip.py
+          Write-Host "Start deleting NPM"
           cmd.exe /c "rmdir /S /Q C:\NPM\"
+          Write-Host "Deleting NPM Done"
+          Write-Host "Start Deleting Java"
           cmd.exe /c "rmdir /S /Q C:\java\"
+          Write-Host "Deleting Java Done"
       displayName: UsePythonVersion for VS 2015
     - script: |
         echo %PATH%
