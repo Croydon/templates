@@ -73,10 +73,13 @@ jobs:
           Get-Childitem "C:\Program Files" -directory
           Invoke-WebRequest https://aka.ms/nugetclidl -OutFile C:\nuget.exe
           C:\nuget.exe install python -Version ${{ parameters.pythonVersion }} -ExcludeVersion -OutputDirectory C:\
+          Invoke-WebRequest -OutFile get-pip.py https://bootstrap.pypa.io/get-pip.py
+          C:\python\tools\python.exe get-pip.py
           Get-Childitem "C:\python" -recurse
-          Write-Host "##vso[task.prependpath]C:\python"
+          Write-Host "##vso[task.prependpath]C:\python\tools"
           Write-Host "##vso[task.prependpath]C:\python\Scripts"
           Remove-Item C:\nuget.exe
+          Remove-Item get-pip.py
           $rmvfolders = @( “C:\NPM\*“, “C:\java\*“, “C:\Program Files\nodejs\*“, “C:\Python27\*“, “C:\Program Files (x86)\GtkSharp\*“ )
           Remove-Item $rmvfolders -recurse -Force
       displayName: UsePythonVersion for VS 2015
