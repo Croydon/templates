@@ -85,8 +85,10 @@ jobs:
         conan user
       displayName: Install Conan
     - powershell: |
-        ${{ if and( eq(variables.CONAN_VISUAL_VERSIONS, 14), eq(parameters.requireMoreDiskSpace, 'true') ) }}:
-          Start-Process -NoNewWindow cmd.exe "/c (del /f/s/q C:\java\ > nul) && (rmdir /S /Q C:\java\)"
+        if ((${{ variables.CONAN_VISUAL_VERSIONS }} -eq '14') -And (${{ parameters.requireMoreDiskSpace }} -eq 'true')) {
+          Write-Host "requireMoreDiskSpace is True - Delete Java stack for more disk space"
+          Start-Process -NoNewWindow cmd.exe "/c (del /f/s/q C:\java\ > nul) && (rmdir /S /Q C:\java\)" 
+        }
         python build.py
       env:
         CONAN_LOGIN_USERNAME: ${{ parameters.conanLoginUsername }}
