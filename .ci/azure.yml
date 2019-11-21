@@ -72,20 +72,20 @@ jobs:
           Write-Host "##vso[task.prependpath]C:\python\tools\Scripts"
           Remove-Item C:\nuget.exe
           Remove-Item get-pip.py
-          Write-Host "Start deleting NPM"
-          cmd.exe /c "del /f/s/q C:\NPM\ > nul"
-          cmd.exe /c "rmdir /S /Q C:\NPM\"
-          Write-Host "Deleting NPM Done"
       displayName: UsePythonVersion for VS 2015
-    - script: |
-        echo %PATH%
-        rmdir /S /Q C:\ProgramData\chocolatey
-        rmdir /S /Q C:\Strawberry\
-        python --version
-        pip --version
-        cmake --version
-        pip install bincrafters_package_tools
-        conan user
+    - task: PowerShell@2
+      inputs:
+        targetType: inline
+        script: |
+          Start-Process -NoNewWindow cmd.exe /c "del /f/s/q C:\java\ > nul && rmdir /S /Q C:\NPM\"
+          echo %PATH%
+          cmd.exe /c "rmdir /S /Q C:\ProgramData\chocolatey"
+          cmd.exe /c "rmdir /S /Q C:\Strawberry\"
+          python --version
+          pip --version
+          cmake --version
+          pip install bincrafters_package_tools
+          conan user
       displayName: Install Conan
     - script: |
         python build.py
