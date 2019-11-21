@@ -72,13 +72,10 @@ jobs:
           Write-Host "##vso[task.prependpath]C:\python\tools\Scripts"
           Remove-Item C:\nuget.exe
           Remove-Item get-pip.py
-          mkdir C:\empty
           Write-Host "Start deleting NPM"
-          robocopy c:\empty C:\NPM\ /purge
+          cmd.exe /c "del /f/s/q C:\NPM\ > nul"
+          cmd.exe /c "rmdir /S /Q C:\NPM\"
           Write-Host "Deleting NPM Done"
-          Write-Host "Start Deleting Java"
-          robocopy c:\empty C:\java\ /purge
-          Write-Host "Deleting Java Done"
       displayName: UsePythonVersion for VS 2015
     - script: |
         echo %PATH%
@@ -90,11 +87,6 @@ jobs:
         pip install bincrafters_package_tools
         conan user
       displayName: Install Conan
-    - task: PowerShell@2
-      inputs:
-        targetType: inline
-        script: |
-          Get-Childitem "C:\ProgramData" -directory
     - script: |
         python build.py
       env:
