@@ -5,6 +5,7 @@ parameters:
   vsVersions: "14,15,16"  # Possible values: any combination of 14, 15, 16 or empty ("")
   appleClangVersions: ""  # Possible values: "10", "" (for no Apple Clang build jobs)
   splitByBuildTypes: "false"  # Possible values: "false", "true"
+  requireMoreDiskSpace: "true" # Possible values: "false", "true" - Deletes the entire Java stack for VS 2015 images
 
 jobs:
 - ${{ if ne(parameters.appleClangVersions, '') }}:
@@ -73,21 +74,19 @@ jobs:
           Remove-Item C:\nuget.exe
           Remove-Item get-pip.py
       displayName: UsePythonVersion for VS 2015
-    - task: PowerShell@2
-      inputs:
-        targetType: inline
-        script: |
-          Start-Process -NoNewWindow cmd.exe "/c (del /f/s/q C:\java\ > nul) && (rmdir /S /Q C:\java\)"
-          echo %PATH%
-          cmd.exe /c "rmdir /S /Q C:\ProgramData\chocolatey"
-          cmd.exe /c "rmdir /S /Q C:\Strawberry\"
-          python --version
-          pip --version
-          cmake --version
-          pip install bincrafters_package_tools
-          conan user
-      displayName: Install Conan
     - script: |
+        echo %PATH%
+        cmd.exe /c "rmdir /S /Q C:\ProgramData\chocolatey"
+        cmd.exe /c "rmdir /S /Q C:\Strawberry\"
+        python --version
+        pip --version
+        cmake --version
+        pip install bincrafters_package_tools
+        conan user
+      displayName: Install Conan
+    - powershell: |
+        ${{ if and( eq(variables.CONAN_VISUAL_VERSIONS, 14), eq(parameters.requireMoreDiskSpace, 'true') ) }}:
+          Start-Process -NoNewWindow cmd.exe "/c (del /f/s/q C:\java\ > nul) && (rmdir /S /Q C:\java\)"
         python build.py
       env:
         CONAN_LOGIN_USERNAME: ${{ parameters.conanLoginUsername }}
