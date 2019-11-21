@@ -85,7 +85,7 @@ jobs:
         conan user
       displayName: Install Conan
     - powershell: |
-        if ((${{ env:CONAN_VISUAL_VERSIONS }} -eq 14) -And (${{ parameters.requireMoreDiskSpace }} -eq 'true')) {
+        if (($env:CONAN_VISUAL_VERSIONS -eq 14) -And (${{ parameters.requireMoreDiskSpace }} -eq 'true')) {
           Write-Host "requireMoreDiskSpace is True - Delete Java stack for more disk space"
           Start-Process -NoNewWindow cmd.exe "/c (del /f/s/q C:\java\ > nul) && (rmdir /S /Q C:\java\)" 
         }
