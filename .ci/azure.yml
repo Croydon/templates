@@ -26,6 +26,8 @@ jobs:
         conan user
       displayName: Install Conan
     - script: |
+        echo $PATH
+        cmake --version
         python build.py
       env:
         CONAN_LOGIN_USERNAME: ${{ parameters.conanLoginUsername }}
