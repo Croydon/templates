@@ -76,8 +76,10 @@ jobs:
       displayName: UsePythonVersion for VS 2015
     - script: |
         echo %PATH%
-        rmdir /S /Q C:\ProgramData\chocolatey
-        rmdir /S /Q C:\Strawberry\
+        rmdir /S /Q "C:\ProgramData\chocolatey"
+        rmdir /S /Q "C:\Program Files (x86)\CMake\bin"
+        rmdir /S /Q "C:\Program Files\CMake\bin"
+        rmdir /S /Q "C:\Strawberry\"
         pip install --upgrade cmake
         python --version
         pip --version
@@ -86,7 +88,7 @@ jobs:
         conan user
       displayName: Install Conan
     - powershell: |
-        echo %PATH%
+        echo $env:PATH 
         cmake --version
         if (($env:CONAN_VISUAL_VERSIONS -eq 14) -And ('${{ parameters.requireMoreDiskSpace }}' -eq 'true')) {
           Write-Host "VS2015 image and requireMoreDiskSpace is True - Delete Java stack for more disk space"
