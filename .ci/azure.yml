@@ -89,7 +89,6 @@ jobs:
         conan user
       displayName: Install Conan
     - powershell: |
-        (get-command cmake).Path
         ls "C:\ProgramData\chocolatey"
         ls "C:\Strawberry\"
         ls "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft"
