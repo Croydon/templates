@@ -80,8 +80,8 @@ jobs:
         if ($env:CONAN_VISUAL_VERSIONS -ne 14) {
           ls "C:\ProgramData\chocolatey\bin"
           ls "C:\ProgramData\chocolatey\tools"
+          ls "C:\Strawberry\"
         }
-        ls "C:\Strawberry\"
         if ($env:CONAN_VISUAL_VERSIONS -eq 15) {
           ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\CommonExtensions\Microsoft"
           ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake"
@@ -98,6 +98,8 @@ jobs:
         rmdir /S /Q "C:\ProgramData\chocolatey"
         rmdir /S /Q "C:\Program Files (x86)\CMake\bin"
         rmdir /S /Q "C:\Program Files\CMake\bin"
+        rmdir /S /Q "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake"
+        rmdir /S /Q "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake"
         rmdir /S /Q "C:\Strawberry\"
         python --version
         pip --version
