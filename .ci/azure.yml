@@ -77,15 +77,18 @@ jobs:
           Remove-Item get-pip.py
       displayName: UsePythonVersion for VS 2015
     - powershell: |
-        ls "C:\ProgramData\chocolatey"
+        if ($env:CONAN_VISUAL_VERSIONS -nq 14) {
+          ls "C:\ProgramData\chocolatey\bin"
+          ls "C:\ProgramData\chocolatey\tools"
+        }
         ls "C:\Strawberry\"
         if ($env:CONAN_VISUAL_VERSIONS -eq 15) {
-          ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft"
-          ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake"
+          ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\CommonExtensions\Microsoft"
+          ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake"
         }
         if ($env:CONAN_VISUAL_VERSIONS -eq 16) {
-          ls "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft"
-          ls "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake"
+          ls "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft"
+          ls "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake"
         }
         echo $env:PATH 
         cmake --version
