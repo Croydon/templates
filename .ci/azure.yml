@@ -99,10 +99,10 @@ jobs:
           Start-Process -PassThru -NoNewWindow cmd.exe '/c rmdir /S /Q "C:\Strawberry\"';
           Start-Process -PassThru -NoNewWindow cmd.exe '/c rmdir /S /Q "C:\Program Files (x86)\CMake\bin"';
           Start-Process -PassThru -NoNewWindow cmd.exe '/c rmdir /S /Q "C:\Program Files\CMake\bin"';
-          Start-Process -PassThru -NoNewWindow cmd.exe '/c rmdir /S /Q "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake"';
-          Start-Process -PassThru -NoNewWindow cmd.exe '/c rmdir /S /Q "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake"';
+          Start-Process -PassThru -NoNewWindow cmd.exe '/c rmdir /S /Q "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake"';
+          Start-Process -PassThru -NoNewWindow cmd.exe '/c rmdir /S /Q "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake"';
         )
-        $delete | Wait-Process
+        $delete | Wait-Process 
         echo $env:PATH
         pip install -U cmake
         python --version
@@ -113,6 +113,7 @@ jobs:
       displayName: Install Conan
     - powershell: |
         echo $env:PATH 
+        echo (get-command cmake).Path
         cmake --version
         if (($env:CONAN_VISUAL_VERSIONS -eq 14) -And ('${{ parameters.requireMoreDiskSpace }}' -eq 'true')) {
           Write-Host "VS2015 image and requireMoreDiskSpace is True - Delete Java stack for more disk space"
