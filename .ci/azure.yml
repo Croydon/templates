@@ -82,7 +82,6 @@ jobs:
         rmdir /S /Q "C:\Program Files (x86)\CMake\bin"
         rmdir /S /Q "C:\Program Files\CMake\bin"
         rmdir /S /Q "C:\Strawberry\"
-        pip install --upgrade cmake
         python --version
         pip --version
         cmake --version
@@ -90,6 +89,7 @@ jobs:
         conan user
       displayName: Install Conan
     - powershell: |
+        (get-command cmake).Path
         echo $env:PATH 
         cmake --version
         if (($env:CONAN_VISUAL_VERSIONS -eq 14) -And ('${{ parameters.requireMoreDiskSpace }}' -eq 'true')) {
