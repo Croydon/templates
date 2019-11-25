@@ -100,7 +100,7 @@ jobs:
         pip --version
         cmake --version
         pip install bincrafters_package_tools
-        Invoke-Command -ErrorAction SilentlyContinue -ScriptBlock { conan user }
+        Start-Process -Wait -NoNewWindow cmd.exe '/c conan user'
       displayName: Install Conan
     - powershell: |
         if ($env:CONAN_VISUAL_VERSIONS -eq 15) {
@@ -109,8 +109,6 @@ jobs:
         if ($env:CONAN_VISUAL_VERSIONS -eq 16) {
           ls "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin"
         }
-        echo $env:PATH 
-        cmake --version
       displayName: PATH
     - powershell: |
         echo $env:PATH 
