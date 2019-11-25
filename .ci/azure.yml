@@ -76,6 +76,20 @@ jobs:
           Remove-Item C:\nuget.exe
           Remove-Item get-pip.py
       displayName: UsePythonVersion for VS 2015
+    - powershell: |
+        ls "C:\ProgramData\chocolatey"
+        ls "C:\Strawberry\"
+        if ($env:CONAN_VISUAL_VERSIONS -eq 15) {
+          ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft"
+          ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake"
+        }
+        if ($env:CONAN_VISUAL_VERSIONS -eq 16) {
+          ls "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft"
+          ls "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake"
+        }
+        echo $env:PATH 
+        cmake --version
+      displayName: PATH
     - script: |
         echo %PATH%
         rmdir /S /Q "C:\ProgramData\chocolatey"
@@ -89,12 +103,6 @@ jobs:
         conan user
       displayName: Install Conan
     - powershell: |
-        ls "C:\ProgramData\chocolatey"
-        ls "C:\Strawberry\"
-        ls "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft"
-        ls "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake"
-        ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft"
-        ls "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake"
         echo $env:PATH 
         cmake --version
         if (($env:CONAN_VISUAL_VERSIONS -eq 14) -And ('${{ parameters.requireMoreDiskSpace }}' -eq 'true')) {
