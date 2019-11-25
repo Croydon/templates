@@ -109,7 +109,7 @@ jobs:
         pip --version
         cmake --version
         pip install bincrafters_package_tools
-        conan user
+        Invoke-Command -ErrorAction SilentlyContinue -ScriptBlock { conan user }
       displayName: Install Conan
     - powershell: |
         echo $env:PATH 
