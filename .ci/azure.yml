@@ -77,7 +77,7 @@ jobs:
           Remove-Item get-pip.py
       displayName: UsePythonVersion for VS 2015
     - powershell: |
-        if ($env:CONAN_VISUAL_VERSIONS -nq 14) {
+        if ($env:CONAN_VISUAL_VERSIONS -ne 14) {
           ls "C:\ProgramData\chocolatey\bin"
           ls "C:\ProgramData\chocolatey\tools"
         }
