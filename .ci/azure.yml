@@ -93,7 +93,7 @@ jobs:
           -Target (get-command cmake).Path
         }
         if ($env:CONAN_VISUAL_VERSIONS -eq 16) {
-          New-Item -ItemType SymbolicLink -Path "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" `
+          New-Item -ItemType SymbolicLink -Path "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" `
           -Target (get-command cmake).Path
         }
         python --version
